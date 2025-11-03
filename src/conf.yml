@@ -1,0 +1,74 @@
+main_title: HTTP Request Smuggling Decision Tree v2025.01
+main_title_logo: request_smuggling
+
+# Matrix layout: 3 rows x 3 columns
+# Row 1: Detection, Basic Desyncs (CL.TE, TE.CL)
+# Row 2: Advanced Desyncs (CL.0, 0.CL), Expect-based
+# Row 3: HTTP/2 Downgrade, Exploitation
+matrix:
+  - ['detection', 'cl_te', 'te_cl', 'exploitation', 'expect']
+  - ['cl_zero', 'zero_cl', 'h2_downgrade', '', '']
+
+tools:
+  # Testing Tools
+  burpsuite:
+    icon: burp
+    link: https://portswigger.net/burp
+
+  smuggler:
+    icon: github
+    link: https://github.com/defparam/smuggler
+
+  http-request-smuggler:
+    icon: burp
+    link: https://portswigger.net/bappstore/aaaa60ef945341e8a450217a54a11646
+
+color_id:
+  # Progression colors
+  detection_color: "#B4C7E7"        # Light blue - Initial detection
+  basic_desync_color: "#FFE699"     # Yellow - Basic desyncs (CL.TE, TE.CL)
+  advanced_desync_color: "#F4B183"  # Orange - Advanced desyncs (CL.0, 0.CL)
+  expect_color: "#E7C6B4"           # Tan - Expect-based attacks
+  h2_color: "#D0CEE2"               # Purple - HTTP/2 downgrade
+  exploit_color: "#FF6B6B"          # Red - Exploitation techniques
+
+  # Output box colors (based on destination)
+  out_detection: "#B4C7E7"
+  out_basic: "#FFE699"
+  out_advanced: "#F4B183"
+  out_expect: "#E7C6B4"
+  out_h2: "#D0CEE2"
+  out_exploit: "#FF6B6B"
+
+container_color:
+  "Detection & Initial Tests": detection_color
+  "CL.TE Desync Attacks": basic_desync_color
+  "TE.CL Desync Attacks": basic_desync_color
+  "CL.0 Desync Attacks": advanced_desync_color
+  "0.CL Desync Attacks": advanced_desync_color
+  "Expect-Based Attacks": expect_color
+  "HTTP/2 Downgrade Attacks": h2_color
+  "Exploitation Techniques": exploit_color
+
+out:
+  # From detection to attacks
+  "V-H discrepancy": out_advanced
+  "H-V discrepancy": out_advanced
+  "CL.0 desync": out_advanced
+  "TE.CL desync": out_basic
+
+  # To exploitation
+  "RQP": out_exploit
+  "Cache poison": out_exploit
+  "XSS gadget": out_exploit
+  "Early-response gadget": out_advanced
+  "Double desync": out_exploit
+  "Obfuscated Expect": out_expect
+  "Response header bypass": out_exploit
+  "Session hijack": out_exploit
+  "Data exfiltration": out_exploit
+  "Malware distribution": out_exploit
+  "XSS delivery": out_exploit
+  "Credential harvest": out_exploit
+  "Privilege escalation": out_exploit
+  "Data access": out_exploit
